@@ -4,9 +4,9 @@ import java.util.Scanner;
 public class Kalc {
     public static void main(String[] args) {
         try {
-            Scanner stroka = new Scanner(System.in);
-            System.out.println("Введите выражение, которое вам нужно посчитать так, чтобы переменные находились в кавычках");
-            String s = stroka.nextLine();
+            Scan scan1 = new Scan();
+            priv();
+            String s = scan1.pechat().nextLine();
             String[] vvod = s.split("\"");
             if (vvod.length > 4)
                 throw new IOException();
@@ -19,7 +19,6 @@ public class Kalc {
                     throw new IOException();
                 if (vvod[2].equals(" + ") || vvod[2].equals(" - ")) {
                     if (vvod[2].equals(" + ")) {
-                        String[] per2 = vvod[2].split("\"");
                         String plus = str1 + str2;
                         System.out.println("\"" + plus + "\"");
                     }
@@ -28,10 +27,12 @@ public class Kalc {
                         System.out.print("\"" + str1 + "\"");
                     }
                 } else {
-                    System.out.println("Введите одну из следующих операций: +,-,*,/");
+                    isk2();
                 }
             } else {
-                System.out.println();
+                char[] simv1 = vvod[1].toCharArray();
+                if (simv1.length > 10)
+                    throw new IOException();
                 String[] arif = vvod[2].split(" ");
                 if (arif[1].equals("*") || arif[1].equals("/")) {
                     if (arif[1].equals("*")) {
@@ -50,32 +51,55 @@ public class Kalc {
                             }
                             System.out.println("\"");
                         } else
-                            System.out.println("умножить можно на целые числа от 1 до 10");
+                            isk3();
                     }
                     if (arif[1].equals("/")) {
                         int a = Integer.parseInt(arif[2]);
                         int b = vvod[1].length();
                         int c = b / a;
                         if (a >= 1 && a <= 10) {
-                            char[] simv1 = vvod[1].toCharArray();
                             System.out.print("\"");
                             for (int i = 0; i < c; i++) {
                                 System.out.print(simv1[i]);
                             }
                             System.out.print("\"");
                         } else
-                            System.out.println("разделить можно на целые числа от 1 до 10");
+                            isk3();
                     }
                 } else {
-                    System.out.println("Введите одну из следующих операций: +,-,*,/");
+                    isk2();
                 }
             }
         } catch (IOException e) {
-            System.out.println("Введите не более двух переменных, каждая из которых не больше 10 символов");
+            isk4();
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Введите сначала строку, выделенную кавычками, затем число, либо две строки, выделенные кавычками");
+            isk5();
         } catch (NumberFormatException e) {
-            System.out.println("Умножать и делить можно только строку на число");
+            isk1();
         }
+    }
+    static void priv(){
+        System.out.println("Введите выражение, которое вам нужно посчитать так, чтобы переменные находились в кавычках");
+    }
+    static void isk1() {
+        System.out.println("Умножать и делить можно только строку на число");
+    }
+    static void isk2(){
+        System.out.println("Введите одну из следующих операций: +,-,*,/");
+    }
+    static void isk3(){
+        System.out.println("умножить и разделить можно на целые числа от 1 до 10");
+    }
+    static void isk4(){
+        System.out.println("Введите не более двух переменных, каждая из которых не больше 10 символов");
+    }
+    static void isk5(){
+        System.out.println("Введите сначала строку, выделенную кавычками, затем число, либо две строки, выделенные кавычками");
+    }
+}
+class Scan{
+    Scanner pechat(){
+        Scanner stroka = new Scanner(System.in);
+        return stroka;
     }
 }
